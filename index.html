@@ -1,0 +1,55 @@
+<html ng-app="app">
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <div ng-controller="AppController">
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2">Toppings</th>
+                        <th colspan="4">Pizza Size</th>
+                    </tr>
+                    <tr>
+                        <th>Small ($5)</th>
+                        <th>Medium ($7)</th>
+                        <th>Large ($8)</th>
+                        <th>Extra Large ($9)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td colspan="5">Veg Toppings</td></tr>
+                    <tr ng-repeat="vegTopping in toppings | filter: {type: 'veg'}: true">
+                        <td>{{vegTopping.label}}</td>
+                        <td ng-repeat="pizza in pizzas" ng-init="pizza[vegTopping.label] = false">
+                            <input type="checkbox" ng-model="pizza[vegTopping.label]" />
+                        </td>
+                    </tr>
+                    <tr><td colspan="5">Non Veg Toppings</td></tr>
+                    <tr ng-repeat="nonVegTopping in toppings | filter: {type: 'non-veg'}">
+                        <td>{{nonVegTopping.label}}</td>
+                        <td ng-repeat="pizza in pizzas" ng-init="pizza[nonVegTopping.label] = false">
+                            <input type="checkbox" ng-model="pizza[nonVegTopping.label]" />
+                        </td>
+                    </tr>
+                    <tr style="background: aliceblue;"><td colspan="5">Total</td></tr>
+                    <tr>
+                        <td>Offer</td>
+                        <td ng-repeat="pizza in pizzas">{{getTotal(pizza)["offer"] || ""}}</td>
+                    </tr>
+                    <tr style="height: 30px;">
+                        <td></td>
+                        <td ng-repeat="pizza in pizzas">
+                                <span ng-if="getTotal(pizza)['offer'] === null">{{getTotal(pizza)["total"] || ""}}</span>
+                                <strike ng-if="getTotal(pizza)['offer'] !== null">{{getTotal(pizza)["total"] || ""}}</strike> <br/>
+                            {{getTotal(pizza)["discountedTotal"] || ""}}            
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>
+

@@ -1,0 +1,11 @@
+table, th, td{
+    border-collapse: collapse;
+    border: 1px solid #000;
+    font-family: sans-serif;
+}
+th{
+    padding: 5px 10px;
+}
+td{
+    padding: 5px 10px;
+}
